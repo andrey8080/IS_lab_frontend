@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>Удалить Chapter</h2>
+<mat-dialog-content>
+	<p>Что вы хотите сделать с SpaceMarine, связанными с этим орденом?</p>
+
+	<mat-radio-group [(ngModel)]="action">
+		<mat-radio-button value="delete">Удалить всех SpaceMarine</mat-radio-button>
+		<mat-radio-button value="reassign">Связать SpaceMarine с другим орденом</mat-radio-button>
+	</mat-radio-group>
+
+	<div *ngIf="action === 'reassign'">
+		<mat-form-field appearance="fill">
+			<mat-label>Выберите новый орден</mat-label>
+			<mat-select [(ngModel)]="newChapterId">
+				<mat-option *ngFor="let chapter of data.availableChapters" [value]="chapter.id">
+					{{ chapter.name }}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+	</div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+	<button mat-button mat-dialog-close>Отмена</button>
+	<button mat-button [mat-dialog-close]="{ action, newChapterId }" [disabled]="action === 'reassign' && !newChapterId">
+		Подтвердить
+	</button>
+</mat-dialog-actions>

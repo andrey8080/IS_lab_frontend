@@ -1,0 +1,194 @@
+:root {
+	--primary-color: #1f1f1f;
+	--secondary-color: #282828;
+	--accent-color: #d4af37;
+	--warning-color: #ff0000;
+	--text-color: #e0e0e0;
+	--text-muted-color: #888888;
+	--border-color: #444444;
+	--button-bg-color: #333333;
+	--button-hover-color: #555555;
+	--input-bg-color: #1f1f1f;
+	--input-text-color: #ffffff;
+	--input-border-color: #444444;
+	--highlight-color: #d4af37;
+	font-family: 'Roboto', sans-serif;
+}
+
+body {
+	margin: 0;
+	background-color: var(--primary-color);
+	color: var(--text-color);
+	font-family: 'Roboto', sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+	color: var(--highlight-color);
+	font-family: 'Roboto Condensed', sans-serif;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	margin: 0;
+}
+
+h1 {
+	font-size: 1.5em;
+	margin-top: 0.5rem;
+	text-align: center;
+	font-family: 'GothicRus', serif !important;
+}
+
+button {
+	background-color: var(--button-bg-color);
+	color: var(--text-color);
+	border: 1px solid var(--border-color);
+	text-transform: uppercase;
+	padding: 10px 20px;
+	font-weight: bold;
+	border-radius: 20px;
+	cursor: pointer;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+	box-shadow: 0 4px #999;
+	transition: all 0.3s ease;
+}
+
+button:hover {
+	background-color: var(--button-hover-color);
+}
+
+button:active {
+	box-shadow: 0 2px #666;
+	transform: translateY(2px);
+}
+
+.home-container {
+	margin-top: 80px;
+	padding: 20px;
+}
+
+.container {
+	max-width: 80%;
+	margin: 5% auto;
+	padding: 2%;
+	border: 2px solid #410a0a;
+	border-radius: 8px;
+	background-color: #1a1a1a;
+}
+
+.mat-form-field, input, mat-select {
+	background-color: var(--input-bg-color);
+	color: var(--input-text-color);
+	border-radius: 4px;
+}
+
+input, mat-select {
+	border: 1px solid var(--input-border-color);
+	padding: 10px;
+	transition: border-color 0.3s ease;
+}
+
+input::placeholder {
+	color: var(--text-muted-color);
+}
+
+input:focus, mat-select:focus {
+	border-color: var(--highlight-color);
+	outline: none;
+}
+
+.mat-form-field.mat-focused .mat-form-field-ripple {
+	background-color: var(--highlight-color);
+}
+
+mat-error {
+	color: var(--warning-color);
+}
+
+mat-card {
+	background-color: var(--secondary-color);
+	border: 1px solid var(--border-color);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+	color: var(--text-color);
+}
+
+/* create компоненты */
+.mat-mdc-card {
+	margin-top: 100px;
+}
+
+label {
+	display: block;
+	margin: 5px 0;
+}
+
+input, select {
+	width: 100%;
+	padding: 8px;
+	margin-bottom: 10px;
+}
+
+
+button[disabled] {
+	background-color: #cccccc;
+}
+
+.control-panel {
+	display: flex;
+	justify-content: space-around;
+	background-color: var(--secondary-color);
+	padding: 20px;
+	border: 1px solid var(--border-color);
+	border-radius: 8px;
+	margin-top: 100px;
+}
+
+.control-panel button {
+	font-weight: bold;
+	text-transform: uppercase;
+	padding: 10px 20px;
+}
+
+
+
+.data-table {
+	width: 90%;
+	border-collapse: collapse;
+	margin: 20px auto;
+	color: var(--text-color);
+	background-color: var(--secondary-color);
+}
+
+.data-table th, .data-table td {
+	text-align: center;
+	vertical-align: middle;
+	border: 1px solid var(--border-color);
+	padding: 8px;
+}
+
+.data-table th {
+	background-color: #333;
+	font-weight: bold;
+	color: var(--accent-color);
+	cursor: pointer;
+	position: relative;
+}
+
+.data-table th span {
+	font-size: 14px;
+	margin-left: 5px;
+}
+
+.data-table th.asc::after {
+	content: ' ↑';
+}
+
+.data-table th.desc::after {
+	content: ' ↓';
+}
+
+.data-table tr:hover {
+	background-color: #3a3a3a;
+}
+
+.button_in_line {
+	scale: 65%;
+}

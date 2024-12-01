@@ -1,0 +1,13 @@
+<header class="header">
+	<h1 (click)="goHome()" style="cursor: pointer;">Warhammer 40000: Space Marine</h1>
+	<nav>
+		<ng-container *ngIf="isLoggedIn; else loggedOut">
+			<p>{{ username }}</p>
+			<button mat-button color="accent" (click)="logout()">Выйти</button>
+		</ng-container>
+		<ng-template #loggedOut>
+			<button mat-button color="accent" (click)="login()">Войти</button>
+			<button mat-raised-button color="primary" (click)="signup()">Зарегистрироваться</button>
+		</ng-template>
+	</nav>
+</header>

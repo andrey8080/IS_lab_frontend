@@ -1,0 +1,31 @@
+<div class="control-panel">
+	<button mat-raised-button color="primary" (click)="create_space_marine()">Создать Космодесантника</button>
+	<button mat-raised-button color="primary" (click)="control_panel_chapter()">Управлять Орденами</button>
+
+	<div>
+		<button mat-raised-button color="accent" (click)="calculateAvgHeight()">Рассчитать среднюю высоту</button>
+		<p *ngIf="averageHeight !== null">Средняя высота: {{ averageHeight }}</p>
+	</div>
+
+	<div>
+		<label for="category-select">Количество SpaceMarine категории..</label>
+		<select id="category-select" [(ngModel)]="category" (ngModelChange)="getCategoryCount()">
+			<option value="">Выберите категорию:</option>
+			<option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+		</select>
+
+		<p *ngIf="categoryCount !== null">Количество объектов с категорией {{ category }}: {{ categoryCount }}</p>
+	</div>
+
+	<div>
+		<label for="substr_search">Найти объекты, имя которых начинается с заданной подстроки</label>
+		<input [(ngModel)]="nameSubstring" id="substr_search" placeholder="Введите подстроку для поиска" />
+		<button mat-raised-button color="accent" (click)="searchByNameSubstring()">Поиск по имени</button>
+		<ul *ngIf="searchResults.length">
+			<li *ngFor="let marine of searchResults">{{ marine.name }} - ID: {{ marine.id }}</li>
+		</ul>
+	</div>
+</div>
+<div *ngIf="isAdmin">
+	<button mat-raised-button color="warn" (click)="navigateToAdminPanel()">Перейти в Админ-панель</button>
+</div>

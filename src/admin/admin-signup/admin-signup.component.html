@@ -1,0 +1,53 @@
+<div class="container">
+	<h2>Регистрация администратора</h2>
+	<form [formGroup]="signUpForm" (ngSubmit)="onSignup()">
+		<mat-form-field appearance="outline">
+			<mat-label>Имя пользователя</mat-label>
+			<input matInput formControlName="username" required>
+			<mat-error *ngIf="signUpForm.get('username')?.hasError('required')">
+				Имя пользователя обязательно
+			</mat-error>
+			<mat-error *ngIf="signUpForm.get('username')?.hasError('minlength')">
+				Имя пользователя должно содержать хотя бы один символ
+			</mat-error>
+			<mat-error *ngIf="signUpForm.get('username')?.hasError('whitespace')">
+				Имя пользователя не должно содержать пробелов
+			</mat-error>
+		</mat-form-field>
+
+		<mat-form-field appearance="outline">
+			<mat-label>Пароль</mat-label>
+			<input matInput type="password" formControlName="password" required>
+			<mat-error *ngIf="signUpForm.get('password')?.hasError('required')">
+				Пароль обязателен
+			</mat-error>
+			<mat-error *ngIf="signUpForm.get('password')?.hasError('minlength')">
+				Пароль должен содержать минимум 6 символов
+			</mat-error>
+			<mat-error *ngIf="signUpForm.get('password')?.hasError('whitespace')">
+				Пароль не должен содержать пробелов
+			</mat-error>
+		</mat-form-field>
+
+		<mat-form-field appearance="outline">
+			<mat-label>Подтверждение пароля</mat-label>
+			<input matInput type="password" formControlName="confirmPassword" required>
+			<mat-error *ngIf="signUpForm.get('confirmPassword')?.hasError('required')">
+				Подтверждение пароля обязательно
+			</mat-error>
+			<mat-error *ngIf="signUpForm.get('confirmPassword')?.hasError('mismatch')">
+				Пароли не совпадают
+			</mat-error>
+		</mat-form-field>
+
+		<mat-form-field appearance="outline">
+			<mat-label>Причина для регистрации</mat-label>
+			<input matInput formControlName="reason" required>
+			<mat-error *ngIf="signUpForm.get('reason')?.hasError('required')">
+				Причина регистрации обязательна
+			</mat-error>
+		</mat-form-field>
+
+		<button type="submit" [disabled]="signUpForm.invalid">Зарегистрироваться</button>
+	</form>
+</div>

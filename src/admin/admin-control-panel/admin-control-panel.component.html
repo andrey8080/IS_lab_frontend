@@ -1,0 +1,10 @@
+<div class="home-container">
+	<h2>Админ-панель</h2>
+	<h3>Заявки на регистрацию</h3>
+	<ul>
+		<li *ngFor="let app of pendingApplications">
+			{{ app.name }} - {{ app.reason }}
+			<button (click)="approveApplication(app.name)">Утвердить</button>
+		</li>
+	</ul>
+</div>

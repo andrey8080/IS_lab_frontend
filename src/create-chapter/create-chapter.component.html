@@ -1,0 +1,29 @@
+<mat-card class="space-marine-form">
+	<form [formGroup]="chapterForm" (ngSubmit)="onSubmit()" class="form-container">
+
+		<mat-form-field appearance="fill">
+			<mat-label>Название Ордена</mat-label>
+			<input matInput id="name" formControlName="name" />
+			<mat-error *ngIf="chapterForm.get('name')?.hasError('required') && chapterForm.get('name')?.touched">
+				Имя обязательно.
+			</mat-error>
+			<mat-error *ngIf="chapterForm.get('name')?.hasError('minlength') && chapterForm.get('name')?.touched">
+				Имя не должно быть пустым.
+			</mat-error>
+			<mat-error *ngIf="chapterForm.get('name')?.hasError('noWhitespace') && chapterForm.get('name')?.touched">
+				Имя не должно состоять только из пробелов.
+			</mat-error>
+		</mat-form-field>
+
+		<mat-form-field appearance="fill">
+			<mat-label>Численность Ордена</mat-label>
+			<input matInput formControlName="marinesCount" />
+		</mat-form-field>
+
+		<mat-form-field appearance="fill">
+			<mat-label>Мир Ордена</mat-label>
+			<input matInput formControlName="world" />
+		</mat-form-field>
+		<button mat-raised-button color="primary" type="submit" [disabled]="chapterForm.invalid">Submit</button>
+	</form>
+</mat-card>

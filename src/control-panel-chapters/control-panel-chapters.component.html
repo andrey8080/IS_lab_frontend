@@ -1,0 +1,26 @@
+<div class="control-panel">
+	<button mat-raised-button color="primary" (click)="create_chapter()">Создать Орден</button>
+</div>
+
+<table class="data-table">
+	<thead>
+	<tr>
+		<th>Имя Ордена</th>
+		<th>Численность Ордена</th>
+		<th>Мир Ордена</th>
+		<th>Удалить</th>
+	</tr>
+	</thead>
+	<tbody *ngIf="chapters && chapters.length > 0">
+	<tr *ngFor="let chapter of chapters">
+		<td>{{ chapter.name }}</td>
+		<td>{{ chapter.count }}</td>
+		<td>{{ chapter.world }}</td>
+		<td>
+			<button mat-icon-button (click)="deleteChapter(chapter)" class="button_in_line">
+				<mat-icon>delete</mat-icon>
+			</button>
+		</td>
+	</tr>
+	</tbody>
+</table>

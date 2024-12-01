@@ -1,0 +1,10 @@
+<canvas #mapCanvas width="1100" height="800"></canvas>
+
+<div id="marineDialog" class="modal" style="display: none;">
+	<div class="modal-content">
+		<h4>SpaceMarine: {{ selectedMarine?.name }}</h4>
+		<button (click)="editMarine()">Изменить</button>
+		<button (click)="deleteMarine()">Удалить</button>
+		<button (click)="hideDialog()">Закрыть</button>
+	</div>
+</div>
