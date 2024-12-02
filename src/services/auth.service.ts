@@ -26,8 +26,8 @@ export class AuthService {
 		return this.http.post(`${this.apiUrl}/signin`, formData);
 	}
 
-	signup(formData: any, adminRequestData : any): Observable<any> {
-		return this.http.post(`${this.apiUrl}/signup`, {formData, adminRequestData});
+	signup(formData: any): Observable<any> {
+		return this.http.post(`${this.apiUrl}/signup`, formData);
 	}
 
 	setToken(token: string, name: string): void {

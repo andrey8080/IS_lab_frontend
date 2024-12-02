@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AdminService} from '../admin.service';
 import {
 	AbstractControl,
@@ -26,7 +26,7 @@ import {throwError} from 'rxjs';
 	imports: [FormsModule, MatError, MatFormField, MatInput, MatLabel, NgIf, ReactiveFormsModule],
 	standalone: true,
 })
-export class AdminSignupComponent {
+export class AdminSignupComponent implements OnInit {
 	signUpForm!: FormGroup;
 
 	constructor(
@@ -62,17 +62,14 @@ export class AdminSignupComponent {
 		}
 
 		const hashedPassword = CryptoJS.MD5(this.signUpForm.get('password')?.value).toString();
-		const formData = {
+		const adminRequestData = {
 			name: this.signUpForm.get('username')?.value,
 			password: hashedPassword,
-			isAdmin: true
-		};
-		const adminRequestData = {
-			name: formData.name,
+			isAdmin: true,
 			reason: this.signUpForm.get('reason')?.value
-		}
+		};
 
-		this.adminAuthService.signup(formData, adminRequestData).pipe(
+		this.adminAuthService.signup(adminRequestData).pipe(
 			timeout(3000),
 			catchError(error => {
 				if (error.name === 'TimeoutError') {
@@ -88,7 +85,7 @@ export class AdminSignupComponent {
 			(response: any) => {
 				if (response.token) {
 					this.toastr.success('Ожидайте её обработки', 'Ваша заявка подана');
-					this.authService.setToken(response.token, formData.name);
+					this.authService.setToken(response.token, adminRequestData.name);
 					this.router.navigate(['/']);
 				} else {
 					this.toastr.error(response.error, 'Ошибка регистрации');

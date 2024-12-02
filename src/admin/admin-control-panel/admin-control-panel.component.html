@@ -1,10 +1,30 @@
 <div class="home-container">
-	<h2>Админ-панель</h2>
 	<h3>Заявки на регистрацию</h3>
-	<ul>
-		<li *ngFor="let app of pendingApplications">
-			{{ app.name }} - {{ app.reason }}
-			<button (click)="approveApplication(app.name)">Утвердить</button>
-		</li>
-	</ul>
+
+	<table class="data-table">
+		<thead>
+		<tr>
+			<th>Имя юзера</th>
+			<th>Причина</th>
+			<th>Одобрить</th>
+			<th>Отклонить</th>
+		</tr>
+		</thead>
+		<tbody *ngIf="pendingApplications && pendingApplications.length > 0">
+		<tr *ngFor="let user of pendingApplications">
+			<td>{{ user.username }}</td>
+			<td>{{ user.reason }}</td>
+			<td>
+				<button mat-icon-button class="button_in_line" (click)="approveApplication(user.username, true)">
+					<mat-icon>check</mat-icon>
+				</button>
+			</td>
+			<td>
+				<button mat-icon-button class="button_in_line" (click)="approveApplication(user.username, false)">
+					<mat-icon>block</mat-icon>
+				</button>
+			</td>
+		</tr>
+		</tbody>
+	</table>
 </div>

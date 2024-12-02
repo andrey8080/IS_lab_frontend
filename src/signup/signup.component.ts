@@ -62,14 +62,10 @@ export class SignUpComponent implements OnInit {
 		const hashedPassword = CryptoJS.MD5(this.signUpForm.get('password')?.value).toString();
 		const formData = {
 			name: this.signUpForm.get('username')?.value,
-			password: hashedPassword,
-			isAdmin: false
+			password: hashedPassword
 		};
 
-		const adminRequestData = {
-		}
-
-		this.authService.signup(formData, adminRequestData).pipe(
+		this.authService.signup(formData).pipe(
 			timeout(3000),
 			catchError(error => {
 				if (error.name === 'TimeoutError') {

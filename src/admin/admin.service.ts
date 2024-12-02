@@ -7,7 +7,6 @@ import {Observable} from 'rxjs';
 })
 export class AdminService {
 	private adminUrl = 'http://localhost:8080/admin';
-	private authUrl = 'http://localhost:8080/auth';
 
 	constructor(private http: HttpClient) {
 	}
@@ -20,21 +19,16 @@ export class AdminService {
 		});
 	}
 
-	login(username: string, password: string): Observable<any> {
+	signup(adminRequestData: any): Observable<any> {
 		const headers = new HttpHeaders({'Content-Type': 'application/json'});
-		return this.http.post(`${this.authUrl}/signin`, {name: username, password}, {headers});
-	}
-
-	signup(formData: any, adminRequestData: any): Observable<any> {
-		const headers = new HttpHeaders({'Content-Type': 'application/json'});
-		return this.http.post(`${this.authUrl}/signup`, {formData, adminRequestData}, {headers});
+		return this.http.post(`${this.adminUrl}/signup`, adminRequestData, {headers});
 	}
 
 	getPendingApplications(token: string): Observable<any[]> {
 		return this.http.post<any[]>(`${this.adminUrl}/admin-requests`, {}, {headers: this.getHeaders()});
 	}
 
-	approveApplication(username: string, token: string): Observable<void> {
-		return this.http.post<void>(`${this.adminUrl}/approve-admin`, {username}, {headers: this.getHeaders()});
+	approveApplication(username: string, isApproved: boolean): Observable<void> {
+		return this.http.post<void>(`${this.adminUrl}/approve-admin`, {username, reason: '', isApproved}, {headers: this.getHeaders()});
 	}
 }

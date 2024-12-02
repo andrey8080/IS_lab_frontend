@@ -28,7 +28,7 @@ export const routes: Routes = [
 	{path: 'space-marine-map', component: SpaceMarineMapComponent, canActivate: [AuthGuard]},
 
 	{path: 'admin-signup', component: AdminSignupComponent},
-	{path: 'admin-panel', component: AdminControlPanelComponent},
+	{path: 'admin-panel', component: AdminControlPanelComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({

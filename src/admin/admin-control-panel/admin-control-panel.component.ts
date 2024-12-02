@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
-import { AdminService } from '../admin.service';
-import { NgForOf } from '@angular/common';
-import { Observable } from 'rxjs';
+import {Component} from '@angular/core';
+import {AdminService} from '../admin.service';
+import {NgForOf, NgIf} from '@angular/common';
+import {Observable} from 'rxjs';
+import {MatIcon} from '@angular/material/icon';
+import {MatIconButton} from '@angular/material/button';
 
 @Component({
 	selector: 'app-admin-panel',
 	templateUrl: './admin-control-panel.component.html',
-	imports: [NgForOf],
+	imports: [NgForOf, MatIcon, MatIconButton, NgIf],
 	standalone: true,
 })
 export class AdminControlPanelComponent {
@@ -33,16 +35,15 @@ export class AdminControlPanelComponent {
 		});
 	}
 
-	approveApplication(username: string) {
-		const token: string = <string>localStorage.getItem('token');
-		this.adminAuthService.approveApplication(username, token).subscribe({
-			next: () => {
-				alert(`Заявка пользователя ${username} одобрена`);
+	approveApplication(username: string, isApproved: boolean) {
+		this.adminAuthService.approveApplication(username, isApproved).subscribe(
+			(response: any) => {
+				alert(response.message);
 				this.loadPendingApplications();
 			},
-			error: (err) => {
-				alert('Ошибка утверждения заявки: ' + err.error.error);
+			error => {
+				console.error(error);
 			},
-		});
+		);
 	}
 }
