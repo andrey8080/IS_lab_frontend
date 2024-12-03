@@ -13,7 +13,7 @@ export class WebSocketService {
 	constructor() {}
 
 	connect() {
-		const socket = new WebSocket('ws://localhost:8080/ws');
+		const socket = new WebSocket('ws://localhost:8088/ws');
 
 		this.stompClient = Stomp.over(socket);
 

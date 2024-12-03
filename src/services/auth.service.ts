@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 	providedIn: 'root',
 })
 export class AuthService {
-	private apiUrl = 'http://localhost:8080/auth';
+	private apiUrl = 'http://localhost:8088/auth';
 
 	private loggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
 	public isLoggedIn$ = this.loggedInSubject.asObservable();

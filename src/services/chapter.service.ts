@@ -7,7 +7,7 @@ import {Chapter} from '../models/space-marine.model';
 	providedIn: 'root',
 })
 export class ChapterService {
-	private baseUrl = 'http://localhost:8080/chapter';
+	private baseUrl = 'http://localhost:8088/chapter';
 
 	constructor(private http: HttpClient) {
 	}

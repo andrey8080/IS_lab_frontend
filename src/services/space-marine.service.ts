@@ -8,12 +8,12 @@ import {WebSocketSubject} from 'rxjs/webSocket';
 	providedIn: 'root',
 })
 export class SpaceMarineService {
-	private baseUrl = 'http://localhost:8080/space-marine';
+	private baseUrl = 'http://localhost:8088/space-marine';
 	private socket: WebSocketSubject<any>;
 
 	constructor(private http: HttpClient) {
 		this.socket = new WebSocketSubject({
-			url: 'ws://localhost:8080/ws',
+			url: 'ws://localhost:8088/ws',
 			openObserver: {
 				next: () => console.log('WebSocket connection established')
 			},
