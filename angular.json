@@ -32,20 +32,18 @@
 							"node_modules/leaflet/dist/leaflet.css",
 							"src/styles.css"
 						],
-						"scripts": []
+						"scripts": [],
+						"allowedCommonJsDependencies": [
+							"crypto-js"
+						]
 					},
 					"configurations": {
 						"production": {
 							"budgets": [
 								{
 									"type": "initial",
-									"maximumWarning": "500kB",
-									"maximumError": "1MB"
-								},
-								{
-									"type": "anyComponentStyle",
-									"maximumWarning": "2kB",
-									"maximumError": "4kB"
+									"maximumWarning": "2mb",
+									"maximumError": "3mb"
 								}
 							],
 							"outputHashing": "all"
@@ -99,8 +97,8 @@
 				}
 			}
 		}
-  },
-  "cli": {
-    "analytics": "41847e93-aef3-415e-8d06-134f1d2e73cf"
-  }
+	},
+	"cli": {
+		"analytics": "41847e93-aef3-415e-8d06-134f1d2e73cf"
+	}
 }

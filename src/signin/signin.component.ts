@@ -3,18 +3,9 @@ import {CommonModule} from '@angular/common';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
-import {Router, RouterLink} from '@angular/router';
+import {Router} from '@angular/router';
 import {AuthService} from '../services/auth.service';
-import {
-	AbstractControl,
-	FormBuilder,
-	FormGroup,
-	FormsModule,
-	ReactiveFormsModule,
-	ValidationErrors,
-	Validators
-} from '@angular/forms';
-import CryptoJS from 'crypto-js';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 import {catchError, timeout} from 'rxjs/operators';
 import {throwError} from 'rxjs';
@@ -25,16 +16,17 @@ import {noWhitespaceValidator} from '../validators/custom-validators';
 	selector: 'app-signin',
 	standalone: true,
 	templateUrl: './signin.component.html',
-	imports: [CommonModule, MatFormFieldModule, MatInputModule, MatButtonModule, RouterLink, FormsModule, ReactiveFormsModule]
+	imports: [CommonModule, MatFormFieldModule, MatInputModule, MatButtonModule, FormsModule, ReactiveFormsModule]
 })
-export class SignInComponent implements OnInit{
+export class SignInComponent implements OnInit {
 	signInForm!: FormGroup;
 
 	constructor(private authService: AuthService,
 				private router: Router,
 				private fb: FormBuilder,
 				private toastr: ToastrService
-	) {}
+	) {
+	}
 
 	ngOnInit() {
 		this.signInForm = this.fb.group(

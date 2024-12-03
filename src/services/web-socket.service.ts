@@ -1,40 +1,48 @@
-import * as Stomp from 'stompjs';
-import {Injectable} from '@angular/core';
-import {Subject} from 'rxjs';
+import { Client, Frame } from '@stomp/stompjs';
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: 'root',
 })
 export class WebSocketService {
-
-	private stompClient!: Stomp.Client;
+	private stompClient!: Client;
 	private messageSubject = new Subject<any>();
 
 	constructor() {}
 
 	connect() {
-		const socket = new WebSocket('ws://localhost:8088/ws');
+		this.stompClient = new Client({
+			brokerURL: 'ws://localhost:8088/ws',
+			debug: (str) => console.log(str),
+			reconnectDelay: 5000,
+		});
 
-		this.stompClient = Stomp.over(socket);
+		this.stompClient.onConnect = (frame: Frame) => {
+			console.log('Connected: ', frame);
+			this.stompClient.subscribe('/topic/updates', (message) => {
+				this.messageSubject.next(message.body);
+			});
+			this.stompClient.publish({
+				destination: '/app/subscribe',
+				body: JSON.stringify({ message: 'Подписываюсь на обновления' }),
+			});
+		};
 
-		// @ts-ignore
-		this.stompClient.connect(
-			{},
-			(frame: Stomp.Frame) => {
-				this.stompClient.send("/app/subscribe", {}, JSON.stringify({ message: "Подписываюсь на обновления" }));
-				this.stompClient.subscribe('/topic/updates', (message) => {
-					this.messageSubject.next(message.body);
-				});
-			},
-			(error: Stomp.Frame | string) => {
-				console.error('Error: ', error);
-			}
-		);
+		this.stompClient.onStompError = (frame: Frame) => {
+			console.error('Broker reported error: ', frame.headers['message']);
+			console.error('Additional details: ', frame.body);
+		};
+
+		this.stompClient.activate();
 	}
 
 	sendMessage(message: string): void {
-		if (this.stompClient.connected) {
-			this.stompClient.send('/app/updates', {}, message);
+		if (this.stompClient && this.stompClient.connected) {
+			this.stompClient.publish({
+				destination: '/app/updates',
+				body: message,
+			});
 		} else {
 			console.error('WebSocket не подключен');
 		}
@@ -46,9 +54,8 @@ export class WebSocketService {
 
 	disconnect(): void {
 		if (this.stompClient && this.stompClient.connected) {
-			this.stompClient.disconnect(() => {
-				console.log('Соединение WebSocket закрыто');
-			});
+			this.stompClient.deactivate();
+			console.log('Соединение WebSocket закрыто');
 		}
 	}
 }
