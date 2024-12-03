@@ -17,6 +17,7 @@ import {ToastrService} from 'ngx-toastr';
 import {catchError, timeout} from 'rxjs/operators';
 import {throwError} from 'rxjs';
 import {noWhitespaceValidator} from '../validators/custom-validators';
+import * as CryptoJS from 'crypto-js';
 
 
 @Component({
