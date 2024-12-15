@@ -1,5 +1,5 @@
 export const environment = {
 	production: false,
-	apiUrl: 'http://lab1-back-app:8080', // Или http://localhost:8088, если тестируете локально
-	socketUrl: 'ws://lab1-back-app:8080/ws' // Или ws://localhost:8088/ws, если тестируете локально
+	apiUrl: 'http://193.106.174.146:8088', // Или http://localhost:8088, если тестируете локально
+	socketUrl: 'ws://193.106.174.146:8088/ws' // Или ws://localhost:8088/ws, если тестируете локально
 };
