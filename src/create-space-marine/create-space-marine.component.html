@@ -42,9 +42,6 @@
 			<mat-error *ngIf="spaceMarineForm.get('health')?.hasError('required') && spaceMarineForm.get('health')?.touched">
 				Обязательное поле.
 			</mat-error>
-			<mat-error *ngIf="spaceMarineForm.get('health')?.hasError('notANumber') && spaceMarineForm.get('health')?.touched">
-				Здоровье должно быть числом.
-			</mat-error>
 			<mat-error *ngIf="spaceMarineForm.get('health')?.hasError('min') && spaceMarineForm.get('health')?.touched">
 				Здоровье должно быть больше 0.
 			</mat-error>
@@ -56,9 +53,6 @@
 		<mat-form-field appearance="fill">
 			<mat-label>Рост</mat-label>
 			<input matInput id="height" formControlName="height" (input)="validateNumber($event, 'float')"/>
-			<mat-error *ngIf="spaceMarineForm.get('height')?.hasError('notANumber') && spaceMarineForm.get('height')?.touched">
-				Рост должно быть числом.
-			</mat-error>
 			<mat-error *ngIf="spaceMarineForm.get('height')?.hasError('min') && spaceMarineForm.get('height')?.touched">
 				Рост должно быть больше 0.
 			</mat-error>
@@ -69,8 +63,7 @@
 
 		<mat-form-field appearance="fill">
 			<mat-label>Категория</mat-label>
-			<mat-select id="category" formControlName="category">
-				<mat-option value="">Выберите категорию</mat-option>
+			<mat-select id="category" formControlName="category" placeholder="Выберете категорию">
 				<mat-option *ngFor="let category of translatedCategories" [value]="category">
 					{{ category }}
 				</mat-option>
@@ -82,8 +75,7 @@
 
 		<mat-form-field appearance="fill">
 			<mat-label>Тип оружия</mat-label>
-			<mat-select id="weaponType" formControlName="weaponType">
-				<mat-option value="">Выберите тип оружия</mat-option>
+			<mat-select id="weaponType" formControlName="weaponType" placeholder="Выберете оружие">
 				<mat-option *ngFor="let weapon of translatedWeapons" [value]="weapon">
 					{{ weapon }}
 				</mat-option>
@@ -97,8 +89,8 @@
 			<mat-form-field appearance="fill">
 				<mat-label>Орден</mat-label>
 				<mat-select formControlName="id" (selectionChange)="onChapterSelect($event)">
-					<mat-option *ngFor="let chapter of chapters" [value]="chapter.id">{{ chapter.name }}</mat-option>
 					<mat-option value="">Создать орден</mat-option>
+					<mat-option *ngFor="let chapter of chapters" [value]="chapter.id">{{ chapter.name }}</mat-option>
 				</mat-select>
 			</mat-form-field>
 
@@ -110,7 +102,10 @@
 
 				<mat-form-field appearance="fill">
 					<mat-label>Число бойцов</mat-label>
-					<input matInput formControlName="marinesCount" />
+					<input matInput formControlName="marinesCount" (input)="validateNumber($event, 'integer')" />
+					<mat-error *ngIf="spaceMarineForm.get('chapter.marinesCount')?.hasError('min') && spaceMarineForm.get('chapter.marinesCount')?.touched">
+						Значение должно быть больше 0.
+					</mat-error>
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
@@ -130,7 +125,7 @@
 
 				<mat-form-field appearance="fill">
 					<mat-label>Число бойцов</mat-label>
-					<input matInput formControlName="marinesCount" [disabled]="true" />
+					<input matInput formControlName="marinesCount" [disabled]="true" (input)="validateNumber($event, 'integer')"/>
 					<mat-error *ngIf="spaceMarineForm.get('chapter.marinesCount')?.hasError('required') && spaceMarineForm.get('chapter.marinesCount')?.touched">
 						Обязательное поле.
 					</mat-error>

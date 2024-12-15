@@ -38,13 +38,27 @@ export class EditSpaceMarineComponent implements OnInit {
 	marineData: SpaceMarine | null = null;
 
 	chapters: any[] = [];
-	categories: string[] = ['SCOUT', 'Aggressor', 'Inceptor', 'Suppressor', 'Terminator'];
-	weapons: string[] = ['HEAVY_BOLTGUN', 'Bolt pistol', 'Bolt rifle', 'Combi flamer', 'Gravy gun'];
+	categories: { [key: string]: string } = {
+		'SCOUT': 'Скаут',
+		'AGGRESSOR': 'Агрессор',
+		'INCEPTOR': 'Инцептор',
+		'SUPPRESSOR': 'Супрессор',
+		'TERMINATOR': 'Терминатор'
+	};
+	weapons: { [key: string]: string } = {
+		'HEAVY_BOLTGUN': 'Тяжёлый болтовой пистолет',
+		'BOLT_PISTOL': 'Болтовой пистолет',
+		'BOLT_RIFLE': 'Болтовая винтовка',
+		'COMBI_FLAMER': 'Комби огнемёт',
+		'GRAVY_GUN': 'Гравипушка'
+	};
+	translatedCategories = Object.values(this.categories);
+	translatedWeapons = Object.values(this.weapons);
 
 	constructor(
 		private route: ActivatedRoute,
 		private spaceMarineService: SpaceMarineService,
-		private chapterService : ChapterService,
+		private chapterService: ChapterService,
 		private fb: FormBuilder,
 		private router: Router,
 		private toastr: ToastrService
@@ -52,17 +66,17 @@ export class EditSpaceMarineComponent implements OnInit {
 		this.spaceMarineForm = this.fb.group({
 			name: ['1', [Validators.required]],
 			coordinates: this.fb.group({
-				x: ['1', [Validators.required, Validators.pattern(/^-?\d+$/), minValue(-585)]],
-				y: ['1', [Validators.required, Validators.pattern(/^-?\d+(\.\d{1,15})?$/), maxValue(118)]],
+				x: ['1', [Validators.required, minValue(-585)]],
+				y: ['1', [Validators.required, maxValue(118)]],
 			}),
-			health: ['1', [Validators.required, Validators.pattern(/^-?\d+$/), minValue(0)]],
+			health: ['1', [Validators.required, minValue(0)]],
 			height: ['1', [Validators.pattern(/^-?\d+(\.\d{1,15})?$/), minValue(0)]],
-			category: [this.categories[0], [Validators.required]],
-			weaponType: [this.weapons[0], [Validators.required]],
+			category: ['', [Validators.required]],
+			weaponType: ['', [Validators.required]],
 			chapter: this.fb.group({
 				id: [''],
 				name: ['', [Validators.required]],
-				marinesCount: ['', [Validators.required]],
+				marinesCount: ['', [Validators.required, Validators.pattern(/^-?\d+$/), minValue(0)]],
 				world: [''],
 			}),
 		});
@@ -82,6 +96,9 @@ export class EditSpaceMarineComponent implements OnInit {
 		this.spaceMarineService.getSpaceMarineById(id).subscribe(
 			(data) => {
 				this.marineData = data;
+
+				const existingChapter = this.chapters.find(chapter => chapter.name === data.chapter.name);
+
 				this.spaceMarineForm.patchValue({
 					name: data.name,
 					coordinates: {
@@ -93,11 +110,16 @@ export class EditSpaceMarineComponent implements OnInit {
 					category: data.category,
 					weaponType: data.weaponType,
 					chapter: {
-						name: data.chapter_name,
-						marinesCount: data.chapter_marinesCount,
-						world: data.chapter_world
+						id: existingChapter.id,
+						name: existingChapter.name,
+						marinesCount: existingChapter.count,
+						world: existingChapter.world,
 					},
 				});
+				this.spaceMarineForm.get('chapter.name')?.disable();
+				this.spaceMarineForm.get('chapter.marinesCount')?.disable();
+				this.spaceMarineForm.get('chapter.world')?.disable();
+
 			},
 			(error) => {
 				this.toastr.error(error, 'Ошибка при загрузке данных:');
@@ -116,11 +138,21 @@ export class EditSpaceMarineComponent implements OnInit {
 		);
 	}
 
+	getOriginalKey(translatedKey: string, map: { [key: string]: string }): string {
+		return Object.keys(map).find((key) => map[key] === translatedKey) || '';
+	}
+
 	onSubmit() {
 		this.trimFormValues(this.spaceMarineForm);
 		if (this.spaceMarineForm.valid) {
-			const updatedMarine = this.spaceMarineForm.value;
-			this.spaceMarineService.updateSpaceMarine(this.marineId, updatedMarine).pipe(
+			const formData = this.spaceMarineForm.value;
+			const payload = {
+				...formData,
+				category: this.getOriginalKey(formData.category, this.categories),
+				weaponType: this.getOriginalKey(formData.weaponType, this.weapons),
+			};
+
+			this.spaceMarineService.updateSpaceMarine(this.marineId, payload).pipe(
 				timeout(3000),
 				catchError(error => {
 					if (error.name === 'TimeoutError') {

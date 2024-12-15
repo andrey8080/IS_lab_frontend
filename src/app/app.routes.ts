@@ -12,10 +12,11 @@ import {ControlPanelChaptersComponent} from '../control-panel-chapters/control-p
 import {SpaceMarineMapComponent} from '../space-marine-map/space-marine-map.component';
 import {AdminSignupComponent} from '../admin/admin-signup/admin-signup.component';
 import {AdminControlPanelComponent} from '../admin/admin-control-panel/admin-control-panel.component';
+import {NoAuthGuard} from './noauth.guard';
 
 export const routes: Routes = [
-	{path: 'login', component: SignInComponent},
-	{path: 'signup', component: SignUpComponent},
+	{path: 'login', component: SignInComponent, canActivate: [NoAuthGuard]},
+	{path: 'signup', component: SignUpComponent, canActivate: [NoAuthGuard]},
 
 	{path: '', component: HomeComponent, canActivate: [AuthGuard]},
 	{path: 'control-panel', component: ControlPanelComponent, canActivate: [AuthGuard]},
@@ -24,11 +25,12 @@ export const routes: Routes = [
 	{path: 'control-panel/edit/:id', component: EditSpaceMarineComponent, canActivate: [AuthGuard]},
 
 	{path: 'control-panel-chapter', component: ControlPanelChaptersComponent, canActivate: [AuthGuard]},
-
 	{path: 'space-marine-map', component: SpaceMarineMapComponent, canActivate: [AuthGuard]},
 
-	{path: 'admin-signup', component: AdminSignupComponent},
+	{path: 'admin-signup', component: AdminSignupComponent, canActivate: [NoAuthGuard]},
 	{path: 'admin-panel', component: AdminControlPanelComponent, canActivate: [AuthGuard]},
+
+	{ path: '**', redirectTo: '' }
 ];
 
 @NgModule({

@@ -69,9 +69,10 @@
 
 		<mat-form-field appearance="fill">
 			<mat-label>Категория</mat-label>
-			<mat-select id="category" formControlName="category">
-				<mat-option value="">Select a category</mat-option>
-				<mat-option *ngFor="let category of categories" [value]="category">{{ category }}</mat-option>
+			<mat-select id="category" formControlName="category" placeholder="Выберете категорию">
+				<mat-option *ngFor="let category of translatedCategories" [value]="category">
+					{{ category }}
+				</mat-option>
 			</mat-select>
 			<mat-error *ngIf="spaceMarineForm.get('category')?.hasError('required') && spaceMarineForm.get('category')?.touched">
 				Вы должны выбрать категорию.
@@ -80,9 +81,10 @@
 
 		<mat-form-field appearance="fill">
 			<mat-label>Тип оружия</mat-label>
-			<mat-select id="weaponType" formControlName="weaponType">
-				<mat-option value="">Select a category</mat-option>
-				<mat-option *ngFor="let weapon of weapons" [value]="weapon">{{ weapon }}</mat-option>
+			<mat-select id="weaponType" formControlName="weaponType" placeholder="Выберете оружие">
+				<mat-option *ngFor="let weapon of translatedWeapons" [value]="weapon">
+					{{ weapon }}
+				</mat-option>
 			</mat-select>
 			<mat-error *ngIf="spaceMarineForm.get('weaponType')?.hasError('required') && spaceMarineForm.get('weaponType')?.touched">
 				Вы должны выбрать тип оружия.
@@ -93,8 +95,8 @@
 			<mat-form-field appearance="fill">
 				<mat-label>Орден</mat-label>
 				<mat-select formControlName="id" (selectionChange)="onChapterSelect($event)">
-					<mat-option *ngFor="let chapter of chapters" [value]="chapter.id">{{ chapter.name }}</mat-option>
 					<mat-option value="">Создать орден</mat-option>
+					<mat-option *ngFor="let chapter of chapters" [value]="chapter.id">{{ chapter.name }}</mat-option>
 				</mat-select>
 			</mat-form-field>
 

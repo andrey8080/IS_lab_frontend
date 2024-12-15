@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CommonModule} from '@angular/common';
-import {ToastrService} from 'ngx-toastr';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatOptionModule} from '@angular/material/core';
@@ -59,17 +58,17 @@ export class CreateSpaceMarineComponent implements OnInit {
 		this.spaceMarineForm = this.fb.group({
 			name: ['1', [Validators.required]],
 			coordinates: this.fb.group({
-				x: ['1', [Validators.required, Validators.pattern(/^-?\d+$/), minValue(-585)]],
-				y: ['1', [Validators.required, Validators.pattern(/^-?\d+(\.\d{1,15})?$/), maxValue(118)]],
+				x: ['1', [Validators.required, minValue(-585)]],
+				y: ['1', [Validators.required, maxValue(118)]],
 			}),
-			health: ['1', [Validators.required, Validators.pattern(/^-?\d+$/), minValue(0)]],
+			health: ['1', [Validators.required, minValue(0)]],
 			height: ['1', [Validators.pattern(/^-?\d+(\.\d{1,15})?$/), minValue(0)]],
-			category: [this.categories[0], [Validators.required]],
-			weaponType: [this.weapons[0], [Validators.required]],
+			category: ['', [Validators.required]],
+			weaponType: ['', [Validators.required]],
 			chapter: this.fb.group({
 				id: [''],
 				name: ['', [Validators.required]],
-				marinesCount: ['', [Validators.required]],
+				marinesCount: ['', [Validators.required, Validators.pattern(/^-?\d+$/), minValue(0)]],
 				world: [''],
 			}),
 		});
