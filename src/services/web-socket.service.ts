@@ -1,6 +1,7 @@
 import { Client, Frame } from '@stomp/stompjs';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import {environment} from '../../environment';
 
 @Injectable({
 	providedIn: 'root',
@@ -13,7 +14,7 @@ export class WebSocketService {
 
 	connect() {
 		this.stompClient = new Client({
-			brokerURL: 'ws://localhost:8088/ws',
+			brokerURL: `${environment.socketUrl}`,
 			debug: (str) => console.log(str),
 			reconnectDelay: 5000,
 		});

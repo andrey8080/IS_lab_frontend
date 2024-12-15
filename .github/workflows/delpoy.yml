@@ -49,6 +49,6 @@ jobs:
                     port: ${{ secrets.SERVER_PORT }}
                     script: |
                         docker pull ${{ secrets.DOCKER_USERNAME }}/is:front-lab1-latest
-                        docker stop lab1-front || true
-                        docker rm lab1-front || true
-                        docker run -d --name lab1-front -p 80:4200 --memory=2g --cpus=1 ${{ secrets.DOCKER_USERNAME }}/is:front-lab1-latest
+                        docker stop lab1-front-app-1 || true
+                        docker rm lab1-front-app-1 || true
+                        docker run -d --name lab1-front-app-1 --network lab1-network -p 80:4200 --memory=2g --cpus=1 ${{ secrets.DOCKER_USERNAME }}/is:front-lab1-latest

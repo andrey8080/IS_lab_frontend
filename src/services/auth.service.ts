@@ -3,12 +3,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { catchError, map, timeout } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
+import {environment} from '../../environment';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class AuthService {
-	private apiUrl = 'http://localhost:8088/auth';
 
 	private loggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
 	public isLoggedIn$ = this.loggedInSubject.asObservable();
@@ -23,11 +23,11 @@ export class AuthService {
 	constructor(private http: HttpClient, private toastr: ToastrService) {}
 
 	login(formData: any): Observable<any> {
-		return this.http.post(`${this.apiUrl}/signin`, formData);
+		return this.http.post(`${environment.apiUrl}/auth/signin`, formData);
 	}
 
 	signup(formData: any): Observable<any> {
-		return this.http.post(`${this.apiUrl}/signup`, formData);
+		return this.http.post(`${environment.apiUrl}/auth/signup`, formData);
 	}
 
 	setToken(token: string, name: string): void {
@@ -67,7 +67,7 @@ export class AuthService {
 
 		const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-		return this.http.post<{ role: string }>(`${this.apiUrl}/verify-token`, {}, { headers }).pipe(
+		return this.http.post<{ role: string }>(`${environment.apiUrl}/auth/verify-token`, {}, { headers }).pipe(
 			timeout(5000),
 			map((response) => {
 				this.loggedInSubject.next(true);

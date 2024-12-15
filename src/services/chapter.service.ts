@@ -2,13 +2,12 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable, tap} from 'rxjs';
 import {Chapter} from '../models/space-marine.model';
+import {environment} from '../../environment';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class ChapterService {
-	private baseUrl = 'http://localhost:8088/chapter';
-
 	constructor(private http: HttpClient) {
 	}
 
@@ -21,11 +20,11 @@ export class ChapterService {
 	}
 
 	getChapters(): Observable<Chapter[]> {
-		return this.http.post<Chapter[]>(`${this.baseUrl}/getAll`, null, {headers: this.getHeaders()});
+		return this.http.post<Chapter[]>(`${environment.apiUrl}/chapter/getAll`, null, {headers: this.getHeaders()});
 	}
 
 	add(formData: any): Observable<any> {
-		return this.http.post(`${this.baseUrl}/add`, formData, {headers: this.getHeaders()});
+		return this.http.post(`${environment.apiUrl}/chapter/add`, formData, {headers: this.getHeaders()});
 	}
 
 	delete(chapterId: number, options: { deleteSpaceMarines?: boolean; newChapterId?: number }): Observable<any> {
@@ -38,7 +37,7 @@ export class ChapterService {
 			params.newChapterId = options.newChapterId.toString();
 		}
 
-		return this.http.delete(`${this.baseUrl}/delete/${chapterId}`, {
+		return this.http.delete(`${environment.apiUrl}/chapter/delete/${chapterId}`, {
 			headers: this.getHeaders(),
 			params: params
 		});

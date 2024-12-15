@@ -3,17 +3,17 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, tap} from 'rxjs';
 import {SpaceMarine} from '../models/space-marine.model';
 import {WebSocketSubject} from 'rxjs/webSocket';
+import {environment} from '../../environment';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class SpaceMarineService {
-	private baseUrl = 'http://localhost:8088/space-marine';
 	private socket: WebSocketSubject<any>;
 
 	constructor(private http: HttpClient) {
 		this.socket = new WebSocketSubject({
-			url: 'ws://localhost:8088/ws',
+			url: `${environment.socketUrl}`,
 			openObserver: {
 				next: () => console.log('WebSocket connection established')
 			},
@@ -32,11 +32,11 @@ export class SpaceMarineService {
 	}
 
 	getAllSpaceMarines(): Observable<SpaceMarine[]> {
-		return this.http.post<SpaceMarine[]>(`${this.baseUrl}/all-objects`, null, {headers: this.getHeaders()});
+		return this.http.post<SpaceMarine[]>(`${environment.apiUrl}/space-marine/all-objects`, null, {headers: this.getHeaders()});
 	}
 
 	getUserSpaceMarines(): Observable<SpaceMarine[]> {
-		return this.http.post<SpaceMarine[]>(`${this.baseUrl}/user-objects`, null, {headers: this.getHeaders()});
+		return this.http.post<SpaceMarine[]>(`${environment.apiUrl}/space-marine/user-objects`, null, {headers: this.getHeaders()});
 	}
 
 	getSpaceMarinesUpdates(): Observable<SpaceMarine[]> {
@@ -44,11 +44,11 @@ export class SpaceMarineService {
 	}
 
 	getSpaceMarineById(id: number): Observable<any> {
-		return this.http.post(`${this.baseUrl}/get/${id}`, null, {headers: this.getHeaders()});
+		return this.http.post(`${environment.apiUrl}/space-marine/get/${id}`, null, {headers: this.getHeaders()});
 	}
 
 	add(formData: any): Observable<any> {
-		return this.http.post(`${this.baseUrl}/add`, formData, {headers: this.getHeaders()}).pipe(
+		return this.http.post(`${environment.apiUrl}/space-marine/add`, formData, {headers: this.getHeaders()}).pipe(
 			tap(() => {
 				this.socket.next('add');
 			})
@@ -56,7 +56,7 @@ export class SpaceMarineService {
 	}
 
 	updateSpaceMarine(id: number | null, formData: any): Observable<any> {
-		return this.http.put(`${this.baseUrl}/update/${id}`, formData, {headers: this.getHeaders()}).pipe(
+		return this.http.put(`${environment.apiUrl}/space-marine/update/${id}`, formData, {headers: this.getHeaders()}).pipe(
 			tap(() => {
 				this.socket.next('update');
 			})
@@ -64,7 +64,7 @@ export class SpaceMarineService {
 	}
 
 	delete(id: number): Observable<any> {
-		return this.http.delete(`${this.baseUrl}/delete/${id}`, {headers: this.getHeaders()}).pipe(
+		return this.http.delete(`${environment.apiUrl}/space-marine/delete/${id}`, {headers: this.getHeaders()}).pipe(
 			tap(() => {
 				this.socket.next('delete');
 			})
