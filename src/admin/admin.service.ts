@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {environment} from '../../environment';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class AdminService {
-	private adminUrl = 'http://193.106.174.146:8088/admin';
+	private apiUrl = `${environment.apiUrl}`;
 
 	constructor(private http: HttpClient) {
 	}
@@ -21,14 +22,14 @@ export class AdminService {
 
 	signup(adminRequestData: any): Observable<any> {
 		const headers = new HttpHeaders({'Content-Type': 'application/json'});
-		return this.http.post(`${this.adminUrl}/signup`, adminRequestData, {headers});
+		return this.http.post(`${this.apiUrl}/admin/signup`, adminRequestData, {headers});
 	}
 
 	getPendingApplications(token: string): Observable<any[]> {
-		return this.http.post<any[]>(`${this.adminUrl}/admin-requests`, {}, {headers: this.getHeaders()});
+		return this.http.post<any[]>(`${this.apiUrl}/admin/admin-requests`, {}, {headers: this.getHeaders()});
 	}
 
 	approveApplication(username: string, isApproved: boolean): Observable<void> {
-		return this.http.post<void>(`${this.adminUrl}/approve-admin`, {username, reason: '', isApproved}, {headers: this.getHeaders()});
+		return this.http.post<void>(`${this.apiUrl}/admin/approve-admin`, {username, reason: '', isApproved}, {headers: this.getHeaders()});
 	}
 }

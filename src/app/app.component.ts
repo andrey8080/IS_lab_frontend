@@ -12,7 +12,7 @@ import { NgIf } from '@angular/common';
 	styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-	title = 'Lab1';
+	title = 'lab';
 	isLoggedIn = false;
 	isRootPath = false;
 

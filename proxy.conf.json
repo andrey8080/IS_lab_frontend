@@ -1,11 +1,11 @@
 {
 	"/auth": {
-		"target": "http://lab1-back-app-1:8088",
+		"target": "http://lab-back-app-1:8088",
 		"secure": false,
 		"changeOrigin": true
 	},
 	"/api": {
-		"target": "http://lab1-back-app-1:8088",
+		"target": "http://lab-back-app-1:8088",
 		"secure": false,
 		"changeOrigin": true,
 		"logLevel": "debug"
