@@ -1,0 +1,30 @@
+<div class="home-container">
+
+	<div class="file-upload">
+		<h3>Загрузите файл</h3>
+		<input type="file" (change)="onFileSelected($event)" />
+		<button [disabled]="!selectedFile" (click)="onUpload()">Загрузить</button>
+		<p *ngIf="uploadProgress">Прогресс загрузки: {{ uploadProgress }}%</p>
+		<p *ngIf="uploadStatus">{{ uploadStatus }}</p>
+	</div>
+
+	<table class="data-table">
+		<thead>
+		<tr>
+			<th>ID</th>
+			<th>Пользователь</th>
+			<th>Статус</th>
+			<th>Кол-во объектов</th>
+		</tr>
+		</thead>
+		<tbody *ngIf="history && history.length > 0">
+		<tr *ngFor="let operation of history">
+			<td>{{ operation.id }}</td>
+			<td>{{ operation.user }}</td>
+			<td>{{ operation.status }}</td>
+			<td>{{ operation.counter }}</td>
+		</tr>
+		</tbody>
+	</table>
+
+</div>

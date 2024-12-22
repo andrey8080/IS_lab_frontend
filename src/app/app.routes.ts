@@ -13,6 +13,7 @@ import {SpaceMarineMapComponent} from '../space-marine-map/space-marine-map.comp
 import {AdminSignupComponent} from '../admin/admin-signup/admin-signup.component';
 import {AdminControlPanelComponent} from '../admin/admin-control-panel/admin-control-panel.component';
 import {NoAuthGuard} from './noauth.guard';
+import {UploadFileComponent} from '../upload-file/upload-file.component';
 
 export const routes: Routes = [
 	{path: 'login', component: SignInComponent, canActivate: [NoAuthGuard]},
@@ -23,6 +24,7 @@ export const routes: Routes = [
 	{path: 'control-panel/create-space-marine', component: CreateSpaceMarineComponent, canActivate: [AuthGuard]},
 	{path: 'control-panel/create-chapter', component: CreateChapterComponent, canActivate: [AuthGuard]},
 	{path: 'control-panel/edit/:id', component: EditSpaceMarineComponent, canActivate: [AuthGuard]},
+	{path: 'control-panel/file_upload', component: UploadFileComponent, canActivate: [AuthGuard]},
 
 	{path: 'control-panel-chapter', component: ControlPanelChaptersComponent, canActivate: [AuthGuard]},
 	{path: 'space-marine-map', component: SpaceMarineMapComponent, canActivate: [AuthGuard]},

@@ -34,6 +34,10 @@ export class ControlPanelComponent implements OnInit {
 		});
 	}
 
+	upload_file() {
+		this.router.navigate(['/control-panel/file_upload']);
+	}
+
 	create_space_marine() {
 		this.router.navigate(['/control-panel/create-space-marine']);
 	}
