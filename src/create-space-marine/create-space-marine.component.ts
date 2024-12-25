@@ -153,7 +153,7 @@ export class CreateSpaceMarineComponent implements OnInit {
 					} else if (error.status === 409) {
 						this.notificationService.error('Пожалуйста, выберите другое имя', 'Орден с таким именем уже существует.')
 					} else {
-						this.notificationService.error(error.message || 'Неизвестная ошибка',);
+						this.notificationService.error('Неизвестная ошибка',);
 					}
 					return throwError(() => error);
 				})

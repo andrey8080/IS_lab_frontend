@@ -59,26 +59,37 @@ export class UploadFileComponent implements OnInit {
 			return;
 		}
 
+		// Создаем объект FormData для отправки файла и дополнительных данных
 		const formData = new FormData();
 		formData.append('file', this.selectedFile);
 
+		// Извлекаем дату последнего изменения файла
+		const fileCreationDate = new Date(this.selectedFile.lastModified).toISOString();
+		formData.append('fileCreationDate', fileCreationDate); // Добавляем дату в форму
+
+		// Отправляем запрос на сервер с авторизацией
 		this.http
 			.post(`${environment.apiUrl}/file/upload`, formData, {
+				headers: new HttpHeaders({
+					'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+				}),
 				reportProgress: true,
-				observe: 'events',
 			})
 			.subscribe({
-				next: (event) => {
-					if (event.type === HttpEventType.UploadProgress && event.total) {
-						this.uploadProgress = Math.round((event.loaded / event.total) * 100);
+				next: (event: any) => {
+					if (event.type === HttpEventType.UploadProgress && event['total']) {
+						// Отображаем прогресс загрузки
+						this.uploadProgress = Math.round((event['loaded'] / event['total']) * 100);
 					} else if (event.type === HttpEventType.Response) {
+						// Успешная загрузка
 						this.notificationService.success('Файл успешно загружен!');
+						this.history = event.body;
 						this.uploadProgress = null;
 					}
 				},
 				error: (error) => {
-					console.error('Ошибка загрузки:', error);
-					this.notificationService.error('Ошибка загрузки файла');
+					// Обработка ошибок при загрузке
+					this.notificationService.error(error.error.error);
 					this.uploadProgress = null;
 				},
 			});

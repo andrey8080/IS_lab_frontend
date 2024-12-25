@@ -13,29 +13,29 @@ export class WebSocketService {
 	constructor() {}
 
 	connect() {
-		this.stompClient = new Client({
-			brokerURL: `${environment.socketUrl}`,
-			debug: (str) => console.log(str),
-			reconnectDelay: 5000,
-		});
-
-		this.stompClient.onConnect = (frame: Frame) => {
-			console.log('Connected: ', frame);
-			this.stompClient.subscribe('/topic/updates', (message) => {
-				this.messageSubject.next(message.body);
-			});
-			this.stompClient.publish({
-				destination: '/app/subscribe',
-				body: JSON.stringify({ message: 'Подписываюсь на обновления' }),
-			});
-		};
-
-		this.stompClient.onStompError = (frame: Frame) => {
-			console.error('Broker reported error: ', frame.headers['message']);
-			console.error('Additional details: ', frame.body);
-		};
-
-		this.stompClient.activate();
+		// this.stompClient = new Client({
+		// 	brokerURL: `${environment.socketUrl}`,
+		// 	debug: (str) => console.log(str),
+		// 	reconnectDelay: 5000,
+		// });
+		//
+		// this.stompClient.onConnect = (frame: Frame) => {
+		// 	console.log('Connected: ', frame);
+		// 	this.stompClient.subscribe('/topic/updates', (message) => {
+		// 		this.messageSubject.next(message.body);
+		// 	});
+		// 	this.stompClient.publish({
+		// 		destination: '/app/subscribe',
+		// 		body: JSON.stringify({ message: 'Подписываюсь на обновления' }),
+		// 	});
+		// };
+		//
+		// this.stompClient.onStompError = (frame: Frame) => {
+		// 	console.error('Broker reported error: ', frame.headers['message']);
+		// 	console.error('Additional details: ', frame.body);
+		// };
+		//
+		// this.stompClient.activate();
 	}
 
 	sendMessage(message: string): void {

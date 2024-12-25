@@ -1,9 +1,9 @@
-name: CI/CD lab1
+name: CI/CD lab
 
 on:
     push:
         branches:
-            - lab1
+            - lab2
 
 jobs:
     build:
@@ -32,8 +32,8 @@ jobs:
 
             -   name: Build and push Docker image
                 run: |
-                    docker build -t ${{ secrets.DOCKER_USERNAME }}/is:front-lab1-latest .
-                    docker push ${{ secrets.DOCKER_USERNAME }}/is:front-lab1-latest
+                    docker build -t ${{ secrets.DOCKER_USERNAME }}/is:front-lab-latest .
+                    docker push ${{ secrets.DOCKER_USERNAME }}/is:front-lab-latest
 
     deploy:
         runs-on: ubuntu-latest
@@ -48,7 +48,7 @@ jobs:
                     password: ${{ secrets.SERVER_PASSWORD }}
                     port: ${{ secrets.SERVER_PORT }}
                     script: |
-                        docker pull ${{ secrets.DOCKER_USERNAME }}/is:front-lab1-latest
-                        docker stop lab1-front-app-1 || true
-                        docker rm lab1-front-app-1 || true
-                        docker run -d --name lab1-front-app-1 --network lab1-network -p 80:4200 --memory=2g --cpus=1 ${{ secrets.DOCKER_USERNAME }}/is:front-lab1-latest
+                        docker pull ${{ secrets.DOCKER_USERNAME }}/is:front-lab-latest
+                        docker stop lab-front-app-1 || true
+                        docker rm lab-front-app-1 || true
+                        docker run -d --name lab-front-app-1 --network lab-network -p 80:4200 --memory=2g --cpus=1 ${{ secrets.DOCKER_USERNAME }}/is:front-lab-latest

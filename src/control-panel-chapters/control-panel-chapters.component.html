@@ -5,6 +5,7 @@
 <table class="data-table">
 	<thead>
 	<tr>
+		<th>ID Ордена</th>
 		<th>Имя Ордена</th>
 		<th>Численность Ордена</th>
 		<th>Мир Ордена</th>
@@ -13,6 +14,7 @@
 	</thead>
 	<tbody *ngIf="chapters && chapters.length > 0">
 	<tr *ngFor="let chapter of chapters">
+		<td>{{ chapter.id }}</td>
 		<td>{{ chapter.name }}</td>
 		<td>{{ chapter.count }}</td>
 		<td>{{ chapter.world }}</td>

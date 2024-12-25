@@ -20,7 +20,7 @@
 		<tbody *ngIf="history && history.length > 0">
 		<tr *ngFor="let operation of history">
 			<td>{{ operation.id }}</td>
-			<td>{{ operation.user }}</td>
+			<td>{{ operation.username }}</td>
 			<td>{{ operation.status }}</td>
 			<td>{{ operation.counter }}</td>
 		</tr>
