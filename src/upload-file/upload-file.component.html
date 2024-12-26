@@ -2,7 +2,7 @@
 
 	<div class="file-upload">
 		<h3>Загрузите файл</h3>
-		<input type="file" (change)="onFileSelected($event)" />
+		<input type="file" (change)="onFileSelected($event)"/>
 		<button [disabled]="!selectedFile" (click)="onUpload()">Загрузить</button>
 		<p *ngIf="uploadProgress">Прогресс загрузки: {{ uploadProgress }}%</p>
 		<p *ngIf="uploadStatus">{{ uploadStatus }}</p>
@@ -15,6 +15,7 @@
 			<th>Пользователь</th>
 			<th>Статус</th>
 			<th>Кол-во объектов</th>
+			<th>Ссылка на файл</th>
 		</tr>
 		</thead>
 		<tbody *ngIf="history && history.length > 0">
@@ -23,6 +24,7 @@
 			<td>{{ operation.username }}</td>
 			<td>{{ operation.status }}</td>
 			<td>{{ operation.counter }}</td>
+			<td><a [href]="operation.fileUrl" [download]="operation.fileName">{{ operation.fileName }}</a></td>
 		</tr>
 		</tbody>
 	</table>

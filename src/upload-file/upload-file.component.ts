@@ -59,15 +59,12 @@ export class UploadFileComponent implements OnInit {
 			return;
 		}
 
-		// Создаем объект FormData для отправки файла и дополнительных данных
 		const formData = new FormData();
 		formData.append('file', this.selectedFile);
 
-		// Извлекаем дату последнего изменения файла
 		const fileCreationDate = new Date(this.selectedFile.lastModified).toISOString();
 		formData.append('fileCreationDate', fileCreationDate); // Добавляем дату в форму
 
-		// Отправляем запрос на сервер с авторизацией
 		this.http
 			.post(`${environment.apiUrl}/file/upload`, formData, {
 				headers: new HttpHeaders({
